@@ -35,7 +35,7 @@ void StampaEtaAlunni()
     }
     Console.WriteLine();
 }
-
+//funzione per aggiungere nome,cognome ed eta' di un alunno nuovo
 void aggiungiAlunno(string nome, string cognome, int eta)
 {
     if (postiDisponibili < massimaCapienzaAula)
@@ -52,7 +52,7 @@ void aggiungiAlunno(string nome, string cognome, int eta)
         Console.WriteLine("Mi dispiace ma l'aula e' piena!");
     }
 }
-
+//elimina l'alunno dall'ultima posizione dell'array
 void eliminaAlunno()
 {
     if (postiDisponibili > 0)
@@ -60,6 +60,7 @@ void eliminaAlunno()
         postiDisponibili--;
         nomeAlunni[postiDisponibili] = "";
         cognomeAlunni[postiDisponibili] = "";
+        etaAlunni[postiDisponibili] = 0;
 
     }
     else
@@ -67,7 +68,7 @@ void eliminaAlunno()
         Console.WriteLine("Mi dispiace ma non hai più auto!");
     }
 }
-
+//Somma delle eta' interno all'array
 int sommaEta(int[] array)
 {
     int somma = 0;
@@ -77,55 +78,57 @@ int sommaEta(int[] array)
     }
     return somma;
 }
-
+//Media eta' dell'array
 float calcolaEtaMediaClasse(int[] array)
 {
     int sommaArray = sommaEta(array);
     float mediaArray = (float)sommaArray / postiDisponibili;
     return mediaArray;
 }
-
+//algoritmo di ricerca che partendo dal primo elemento settato come minimo, lo scambia con il successivo nel caso in cui e' piu' grande e restituisce quel valore se e' il piu' piccolo dell'array
 int EtaPiuGiovane()
 {
     int min = etaAlunni[0];
-    for (int i = 1; i < etaAlunni.Length; i++)
+    for (int i = 1; i < postiDisponibili; i++)
     {
         if (etaAlunni[i] < min)
         {
-            min = etaAlunni[i];
+            min = etaAlunni[i];  
         }
     }
     return min;
     
 }
+//algoritmo di ricerca che partendo dal primo elemento settato come massimo, lo scambia con il successivo nel caso in cui e' piu' piccolo e restituisce quel valore se e' il piu' grande dell'array
 int EtaPiuVecchio()
 {
     int max = etaAlunni[0];
-    for (int i = 1; i < etaAlunni.Length; i++)
+    for (int i = 1; i < postiDisponibili; i++)
     {
         if (etaAlunni[i] > max)
         {
-            max = etaAlunni[i];
+            max = etaAlunni[i];   
         }
     }
     return max;
 }
-    // ------------- PROGRAMMA PRINCIPALE -------------
+
+// ------------- PROGRAMMA PRINCIPALE -------------
 Console.WriteLine("Il numero di alunni in classe è: " + postiDisponibili);
 bool uscitaDalWhile = true;
 
 while (uscitaDalWhile)
 {
     Console.Write("Vuoi aggiungere o rimuovere un alunno dalla classe [aggiungi/rimuovi/completa/stats]? ");
-    string risposta = Console.ReadLine();
+    string? risposta = Console.ReadLine();
 
     switch (risposta)
     {
         case "aggiungi":
             Console.WriteLine("Nome dell'alunno:");
-            string nome = Console.ReadLine();
+            string? nome = Console.ReadLine();
             Console.WriteLine("Cognome dell'alunno:");
-            string cognome = Console.ReadLine();
+            string? cognome = Console.ReadLine();
             Console.WriteLine("Eta dell'alunno:");
             int eta = int.Parse(Console.ReadLine());
             aggiungiAlunno(nome, cognome, eta);
@@ -146,7 +149,7 @@ while (uscitaDalWhile)
             int etaMinore = EtaPiuGiovane();
             Console.WriteLine("Il piu giovane e': " + etaMinore);
             int etaMaggiore = EtaPiuVecchio();
-            Console.WriteLine("Il piu giovane e': " + etaMaggiore);
+            Console.WriteLine("Il piu vecchio e': " + etaMaggiore);
             break;
 
         default:
